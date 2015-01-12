@@ -1,0 +1,101 @@
+﻿
+//--Test case one--	
+  char *test1 = malloc(10);
+  char *test2 = malloc(30);
+
+  free(test1); /* Should free fine */
+  free(test2); /* Should free fine */
+
+  Expected Output
+ Correctly Malloced memory of size 10 
+Correctly Malloced memory of size 30 
+Freeing block with offset 24
+Freeing block with offset 58 
+
+ Actual Output
+Correctly Malloced memory of size 10 
+Correctly Malloced memory of size 30 
+Freeing block with offset 24
+Freeing block with offset 58
+
+
+//--Test case two--
+   char *test3 = malloc(30);
+   free(test3); /* Should free fine */
+   free(test3); /* Should throw error */
+
+  Expected Output
+ Correctly Malloced memory of size 30 
+ Freeing block with offset 24
+Error INVALID FREE, ALREADY FREED! in file: main.c on line: 16 
+
+  Actual Output
+Correctly Malloced memory of size 30 
+Freeing block with offset 24
+Error INVALID FREE, ALREADY FREED! in file: main.c on line: 16 
+  
+
+//--Test case 3--
+   free(0); /* Should throw error */
+   char *test1 = malloc(10);
+   
+Expected Output
+Error INVALID POINTER ADDRESS! in file: main.c on line: 16 
+Correctly Malloced memory of size 10 
+
+Actual Output
+Error INVALID POINTER ADDRESS! in file: main.c on line: 16 
+Correctly Malloced memory of size 10 
+
+
+//--Test case 4--
+   char *p = (char *)malloc( 100 );
+   free( p );
+   p = (char *)malloc( 100 );
+   free( p );
+
+ Expected Output
+Correctly Malloced memory of size 100 
+Freeing block with offset 24
+Correctly Malloced memory of size 100 
+Freeing block with offset 24
+
+ Actual Output
+Correctly Malloced memory of size 100 
+Freeing block with offset 24
+Correctly Malloced memory of size 100 
+Freeing block with offset 24
+   
+   
+//--Test case 5--
+   char *str = malloc(sizeof(char) *strlen("Hello World"));
+   strcpy(str, "Hello World");
+   free(str);
+
+ Expected Output
+Correctly Malloced memory of size 11 
+Freeing block with offset 24
+
+Actual Output
+Correctly Malloced memory of size 11 
+Freeing block with offset 24
+   
+   
+//--Test case 6--
+   int *x = malloc(sizeof(int));
+   free(x);
+   char *t = malloc(4);
+   free(x);
+
+Expected Output
+Correctly Malloced memory of size 4 
+Freeing block with offset 24
+Correctly Malloced memory of size 4 
+Freeing block with offset 24
+
+
+  Actual Output
+Correctly Malloced memory of size 4 
+Freeing block with offset 24
+Correctly Malloced memory of size 4 
+Freeing block with offset 24
