@@ -1,0 +1,134 @@
+1. " ?/" "/user/local?/bin? share"
+
+Expected Output
+user
+local
+bin
+share
+
+Actual Output
+user
+local
+bin
+share
+
+
+2. " ?/" "/user/local??/?/?/??/bin? share"
+
+Expected Output
+user
+local
+bin
+share
+
+Actual Output
+user
+local
+bin
+share
+
+3. " ?/" " ////////user/local??/?/?/??/bin? share"
+
+Expected Output
+user
+local
+bin
+share
+
+Actual Output
+user
+local
+bin
+share
+
+
+4. " ?/" " ////////user/local??/?/?/??/bin? share////?/?/?"
+
+Expected Output
+user
+local
+bin
+share
+
+Actual Output
+user
+local
+bin
+share
+
+5. "\n" "n\\n"
+
+Expected Output
+n
+
+Actual Output
+Nothing, no output string deleted
+
+6. "\n" "n\\\\n"
+
+Expected Output
+n
+
+Actual Output
+  n
+
+7. "" "Hellomynameissam"
+
+Expected Output
+Hellomynameissam
+
+Actual Output
+Hellomynameissam
+
+8. "\n" "Hello\nWorld"
+
+Expected Output
+Hello
+World
+
+Actual Output
+Hello
+World
+
+9. "" "Hello\nWorld"
+
+Expected Output
+Hello[0x0a]World
+
+Actual Output
+Hello[0x0a]World
+
+10. "\n" "He\llo\nWorld"
+
+Expected Output
+He
+llo
+World
+
+Actual Output
+He
+llo
+World
+
+11. " /?" "Hello World my/// name\nis?"
+
+Expected Output
+Hello
+World
+my
+name[0x0a]is
+
+Actual Output
+Hello
+World
+my
+name[0x0a]is
+
+12. "" "H\ello\nWo\rld"
+
+Expected Output
+Hello[0x0a]Wo[0x0d]ld
+
+Actual Output
+Hello[0x0a]Wo[0x0d]ld
+ 
