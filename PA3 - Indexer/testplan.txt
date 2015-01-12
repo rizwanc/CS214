@@ -1,0 +1,16 @@
+
+
+
+-No memory leaks in valgrind
+. exited 
+
+-passed the sample test dir. outputted as expected
+-passed my own  directory that has over 1GB of files outputted as expected
+
+-passed an empty directory. prints a blank output file as expected
+
+-passed a single file
+outputted as expected
+-passed an invalid path for input or output program exited properly 
+-passed dir with files with the same name in different directory program differentiated them.
+
