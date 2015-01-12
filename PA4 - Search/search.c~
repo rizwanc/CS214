@@ -1,0 +1,135 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#include "search.h"
+
+int main(int argc, char **argv)
+{
+	if(argc != 2)
+	{
+		printf("Invalid number of inputs.  Please enter the name of an index file\n");
+		return 1;
+	}
+
+	
+	FILE *file = fopen(argv[1], "r");
+
+	if(file == NULL)
+	{
+		printf("Error, index file is empty!...quitting\n");
+	}
+
+	char *line;
+	HashMap *hashMap;
+	hashMap = createHashMap();
+	SearchRecord *searchRecord;
+	int i;
+	int count = 0;
+
+	line = malloc(2048);
+
+	while(fgets(line, 2048, file) != NULL)
+	{
+		printf("Hello %s\n", line);
+
+		if(strstr(line, "<list>"))
+		{
+			char *word;
+			word = strtok(line + 6, " \n");
+			i = insertRecord(hashMap, word);
+
+			printf("Word in file %s\n", word);
+		}
+		else if(strstr(line, "</list>"))
+		{	
+				continue;
+		}
+		
+	}
+
+	fclose(file);
+
+	/*int l;
+	SearchRecord *searchRec;
+    	SortedListPtr *list;
+    	SortedListIteratorPtr *iterator;
+	
+     for(l = 0; l < 36; l++)
+     {
+	 list = hashMap->lists[l];
+	 iterator = SLCreateIterator(list);
+
+	while((searchRec = SLNextItem(iterator)) != NULL)
+	{
+		printf("Contents: %s\n", searchRec->word);
+		printf("Here as well %d\n", l); 
+	}
+	SLDestroyIterator(iterator);
+     }*/
+
+	SortedListPtr *ptr = hashMap->lists[0];
+	printf("Haha %s\n", ptr->LHead->data->word);
+	printf("file %s\n", ptr->LHead->data->fileName[0]);
+	printf("file %s\n", ptr->LHead->data->fileName[1]);
+	printf("file %s\n", ptr->LHead->data->fileName[2]);
+	printf("file %s\n", ptr->LHead->data->fileName[3]);
+	printf("file %s\n", ptr->LHead->data->fileName[4]);
+
+	
+	destroyHashMap(hashMap);
+	
+
+	return 0;
+}
+
+//Create new hash map
+HashMap *createHashMap()
+{
+    return (HashMap*)malloc(sizeof(struct HashMap));
+}
+
+//Add a new node to the linked list or update an exisiting node
+int insertRecord(HashMap *hashMap, char *token)
+{
+    int i;
+    SortedListPtr *list;
+
+    int asciiZero = 48;
+    int asciiA = 97;
+
+    //Hash functiom if the token is a digit subtract the ascii value for a from the
+    //token to bring it into the 1 to 26 number range in order to correspon that to 
+    //the array index number.  The same is done for digits except we add 26
+    //so to have the digits start at index 26 and go on from there so as not to 
+    //overwrote the letters stored in the first 10 slots.
+    i = isalpha(token[0]) != 0 ? (int)token[0] - asciiA : ((int)token[0] - asciiZero + 26);
+
+    list = hashMap->lists[i];
+
+    if(list == NULL) 
+    {
+        hashMap->lists[i] = SLCreate();
+	
+    }
+	SLInsert(hashMap->lists[i], token);
+
+    return i;
+}
+
+//Free all memory allocated to the hash map and hash map pointer
+void destroyHashMap(HashMap *hashMap)
+{
+	int i;	
+	
+	if(hashMap != NULL)
+	{
+		 for (i = 0; i < 36; i++) 
+    		 {
+        		SLDestroy(hashMap->lists[i]);
+    		 }
+		free(hashMap);	
+	}
+}
+

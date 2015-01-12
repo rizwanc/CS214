@@ -1,0 +1,31 @@
+run makefile ~$make
+run index    ~$./index output.txt ./BooBaaDir/
+run search   ~$./search ./output.txt
+
+when sa followed by words is entered, does logical AND
+when so followed by words is entered, does logical OR
+when 'q' is entered, the program quits and prints: Quitting search, goodbye.
+
+1) input:  sa a name
+   output: ./BooBaaDir//2level1/baa.txt
+           ./BooBaaDir//1level1/2level2/boo.txt
+
+2) input:  so dog cat
+   output: ./BooBaaDir//1level1/2level2/boo.txt
+           ./BooBaaDir//2level1/baa.txt
+
+3) input:  so a dog cat name boo baa
+   output: ./BooBaaDir//2level1/baa.txt
+           ./BooBaaDir//1level1/2level2/boo.txt
+
+4) input:  sa dog boo
+   output: ./BooBaaDir//1level1/2level2/boo.txt
+
+5) input:  sa dog baa
+   output: nothing hapens and goes to next loop because word not found in both files
+
+6) input:  woot
+   output: nothing hapens and goes to next loop because word not found in any files
+
+7) input:  " " //this represents entering an empty space
+   output: bad input, try again
